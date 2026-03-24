@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お米タイピング - KomeTyping</title>
     <style>
-        /* 1. 背景：画面全体をPop風の斜めストライプに */
+        /* 背景：Pop風の斜めストライプ（少し細かくしたよ） */
         body {
             margin: 0;
             padding: 0;
@@ -16,115 +16,109 @@
             background: repeating-linear-gradient(
                 45deg,
                 #666,
-                #666 15px,
-                #777 15px,
-                #777 30px
+                #666 10px,
+                #777 10px,
+                #777 20px
             );
             font-family: "Hiragino Sans", "Meiryo", sans-serif;
             overflow: hidden;
         }
 
-        /* 2. ゲーム画面の「外枠」：Popタイピングのあのサイズ感 */
+        /* ゲーム画面：400x300のコンパクトサイズ */
         #game-window {
-            width: 400px;  /* 横幅を固定 */
-            height: 300px; /* 縦幅を固定 */
-            background-color: #444; /* 中の背景色 */
-            border: 8px solid #333; /* 濃いめの枠 */
-            border-radius: 15px;
+            width: 400px;
+            height: 300px;
+            background-color: #333;
+            border: 5px solid #222;
+            border-radius: 10px;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-            /* 中の縞々 */
-            background-image: repeating-linear-gradient(
-                -45deg,
-                rgba(255,255,255,0.02),
-                rgba(255,255,255,0.02) 2px,
-                transparent 2px,
-                transparent 4px
-            );
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            /* 中に薄いドット模様を入れてデジタル感を出す */
+            background-image: radial-gradient(#444 1px, transparent 1px);
+            background-size: 10px 10px;
         }
 
-        /* 3. タイトル：浮いている感じを出す */
+        /* タイトル：小さめだけど目立つように */
         h1 {
-            font-size: 4.5rem;
-            color: #ffcc00; /* 黄色 */
-            margin: 0 0 30px 0;
-            /* 白と緑のフチ取りでPop風に */
+            font-size: 2.2rem;
+            color: #ffcc00;
+            margin: 0 0 15px 0;
             text-shadow: 
-                4px 4px 0 #fff, -4px -4px 0 #fff,
-                4px -4px 0 #fff, -4px 4px 0 #fff,
-                6px 6px 0 #2e7d32; 
-            transform: rotate(-3deg); /* 少し斜め */
+                2px 2px 0 #fff, -2px -2px 0 #fff,
+                2px -2px 0 #fff, -2px 2px 0 #fff,
+                3px 3px 0 #2e7d32; 
+            transform: rotate(-3deg);
             font-family: 'Arial Black', sans-serif;
         }
 
-        /* スコア表示 */
+        /* スコア表示（左上） */
         #score-board {
             position: absolute;
-            top: 30px;
-            left: 40px;
-            color: white;
-            font-size: 1.8rem;
+            top: 10px;
+            left: 15px;
+            color: #fff;
+            font-size: 0.9rem;
             font-weight: bold;
         }
 
-        /* 漢字とローマ字 */
+        /* 漢字とローマ字：サイズを調整 */
         #kanji {
-            font-size: 2.2rem;
-            color: #ddd;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #bbb;
+            margin-bottom: 5px;
             height: 1.2em;
         }
 
         #word {
-            font-size: 4.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #00e5ff; /* 鮮やかな水色 */
-            text-shadow: 0 0 20px rgba(0,229,255,0.4);
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(0,229,255,0.4);
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* 4. 下のボタン */
+        /* ボタン：小さくして並べる */
         .btn-group {
-            margin-top: 50px;
+            margin-top: 25px;
             display: flex;
-            gap: 20px;
+            gap: 10px;
         }
 
         .pop-button {
-            padding: 12px 30px;
-            font-size: 1.2rem;
+            padding: 6px 15px;
+            font-size: 0.8rem;
             font-weight: bold;
             color: white;
             background: linear-gradient(to bottom, #ff9900, #cc7700);
             border: none;
-            border-radius: 50px;
-            box-shadow: 0 5px #995500;
+            border-radius: 20px;
+            box-shadow: 0 3px #995500;
             cursor: pointer;
         }
 
         .pop-button:active {
             box-shadow: none;
-            transform: translateY(5px);
+            transform: translateY(3px);
         }
 
-        /* バージョン表記（左下） */
+        /* バージョン表記（右下） */
         .version {
             position: absolute;
-            bottom: 15px;
-            left: 20px;
-            color: #888;
-            font-size: 0.9rem;
+            bottom: 8px;
+            right: 12px;
+            color: #666;
+            font-size: 0.7rem;
         }
     </style>
 </head>
 <body>
 
     <div id="game-window">
-        <div id="score-board">ハイスコア: <span id="rice-count">0</span> 粒</div>
+        <div id="score-board">スコア: <span id="rice-count">0</span> 粒</div>
         
         <h1>お米タイピング</h1>
         
@@ -133,7 +127,7 @@
 
         <div class="btn-group">
             <button class="pop-button" onclick="location.reload()">リセット</button>
-            <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 5px #000;">設定</button>
+            <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 3px #000;">設定</button>
         </div>
 
         <div class="version">Ver.1.0 ©KomeTyping</div>
@@ -189,7 +183,7 @@
             }
         });
 
-        initGame();
+            initGame();
     </script>
 </body>
 </html>
