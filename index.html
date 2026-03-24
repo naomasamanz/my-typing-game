@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お米タイピング - KomeTyping</title>
+    <title>お米タイピング</title>
     <style>
         /* 背景：Pop風の斜めストライプ（少し細かくしたよ） */
         body {
@@ -42,23 +42,19 @@
             background-size: 10px 10px;
         }
 
-        /* タイトル：影をなくして、滑らかなフチ取りにする修正版 */
-        h1 {
+      h1 {
             position: absolute;
             top: 40px;
             width: 100%;
             text-align: center;
             font-size: 2.2rem;
-            color: #ffcc00; /* 文字の色（黄色） */
+            color: #ffcc00; /* 文字の色：黄色 */
             margin: 0;
             font-family: 'Arial Black', sans-serif;
-            
-            /* 【ここがポイント！】影（text-shadow）を全部消す */
-            text-shadow: none;
 
-            /* 【新しい魔法】文字そのものに「白いフチ」をつける */
-            -webkit-text-stroke: 3px #000; /* フチの太さと色（白） */
-            text-stroke: 3px #000;
+            /* 影を完全に消して、滑らかな白フチだけにする */
+            text-shadow: none; 
+            -webkit-text-stroke: 1.5px #fff; /* フチを少し細くしてスッキリさせる */
         }
 
         /* スコア表示（左上） */
