@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お米タイピング</title>
+    <title>お米タイピング - KomeTyping</title>
     <style>
-        /* 背景：Pop風の斜めストライプ（少し細かくしたよ） */
         body {
             margin: 0;
             padding: 0;
@@ -13,105 +12,102 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: repeating-linear-gradient(
-                45deg,
-                #666,
-                #666 10px,
-                #777 10px,
-                #777 20px
-            );
+            background: repeating-linear-gradient(45deg, #666, #666 10px, #777 10px, #777 20px);
             font-family: "Hiragino Sans", "Meiryo", sans-serif;
             overflow: hidden;
         }
 
-        /* ゲーム画面：400x300のコンパクトサイズ */
+        /* ゲーム画面：Popタイピング風のコンパクトサイズ */
         #game-window {
             width: 400px;
             height: 300px;
             background-color: #333;
             border: 5px solid #222;
-            border-radius: 10px;
+            border-radius: 12px;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            /* 中に薄いドット模様を入れてデジタル感を出す */
             background-image: radial-gradient(#444 1px, transparent 1px);
             background-size: 10px 10px;
         }
 
-      h1 {
+        /* タイトル：位置を少し下げてバランスを調整 */
+        h1 {
             position: absolute;
-            top: 40px;
+            top: 65px; /* 上から少し離して「ゆとり」を作ったよ */
             width: 100%;
             text-align: center;
             font-size: 2.2rem;
-            color: #ffcc00; /* 文字の色：黄色 */
+            color: #ffcc00;
             margin: 0;
             font-family: 'Arial Black', sans-serif;
-
-            /* 影を完全に消して、滑らかな白フチだけにする */
-            text-shadow: none; 
-            -webkit-text-stroke: 1.5px #fff; /* フチを少し細くしてスッキリさせる */
+            text-shadow: none; /* 影を消してスッキリ */
+            -webkit-text-stroke: 1.5px #fff; /* 綺麗な白フチ */
         }
 
-        /* スコア表示（左上） */
         #score-board {
             position: absolute;
-            top: 10px;
-            left: 15px;
+            top: 15px;
+            left: 20px;
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
-        /* 漢字とローマ字：サイズを調整 */
+        /* 問題エリア：タイトルとの間隔を広げたよ */
+        #question-area {
+            position: absolute;
+            top: 155px; /* ここを下げて全体を真ん中寄りに */
+            width: 100%;
+            text-align: center;
+        }
+
         #kanji {
             font-size: 1.2rem;
             color: #bbb;
-            margin-bottom: 5px;
-            height: 1.2em;
+            margin-bottom: 2px;
+            height: 1.5em;
         }
 
         #word {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: bold;
             color: #00e5ff;
             text-shadow: 0 0 10px rgba(0,229,255,0.4);
             font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
         }
 
-        /* ボタン：小さくして並べる */
+        /* ボタン：一番下すぎないように調整 */
         .btn-group {
-            margin-top: 25px;
+            position: absolute;
+            bottom: 35px;
+            width: 100%;
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
         }
 
         .pop-button {
-            padding: 6px 15px;
-            font-size: 0.8rem;
+            padding: 8px 18px;
+            font-size: 0.9rem;
             font-weight: bold;
             color: white;
             background: linear-gradient(to bottom, #ff9900, #cc7700);
             border: none;
             border-radius: 20px;
-            box-shadow: 0 3px #995500;
+            box-shadow: 0 4px #995500;
             cursor: pointer;
         }
 
         .pop-button:active {
             box-shadow: none;
-            transform: translateY(3px);
+            transform: translateY(4px);
         }
 
-        /* バージョン表記（右下） */
         .version {
             position: absolute;
-            bottom: 8px;
-            right: 12px;
+            bottom: 10px;
+            right: 15px;
             color: #666;
             font-size: 0.7rem;
         }
@@ -124,12 +120,14 @@
         
         <h1>お米タイピング</h1>
         
-        <div id="kanji">Loading...</div>
-        <div id="word"></div>
+        <div id="question-area">
+            <div id="kanji">Loading...</div>
+            <div id="word"></div>
+        </div>
 
         <div class="btn-group">
             <button class="pop-button" onclick="location.reload()">リセット</button>
-            <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 3px #000;">設定</button>
+            <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 4px #000;">設定</button>
         </div>
 
         <div class="version">Ver.1.0 ©KomeTyping</div>
@@ -185,7 +183,7 @@
             }
         });
 
-            initGame();
+        initGame();
     </script>
 </body>
 </html>
