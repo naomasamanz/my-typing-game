@@ -17,45 +17,46 @@
         overflow: hidden;
     }
 
+    /* 【サイズ変更】横を500px、縦を350pxに広げたよ！ */
     #game-window {
-        width: 400px;
-        height: 300px;
+        width: 500px;
+        height: 350px;
         background-color: #333;
-        border: 5px solid #222;
-        border-radius: 12px;
+        border: 6px solid #222; /* 枠も少し太くして重厚感アップ */
+        border-radius: 15px;
         position: relative;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.7);
         background-image: radial-gradient(#444 1px, transparent 1px);
         background-size: 10px 10px;
     }
 
-    /* 【修正】スコア：場所を固定して、色を真っ白に！ */
+    /* スコア */
     #score-board {
         position: absolute;
-        top: 15px;
-        left: 20px;
-        color: #ffffff; /* 真っ白 */
-        font-size: 1rem;
+        top: 20px;
+        left: 25px;
+        color: #ffffff;
+        font-size: 1.1rem;
         font-weight: bold;
         z-index: 10;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* 文字をくっきりさせる影 */
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
     }
 
-    /* タイトル：白フチの黄色い文字 */
+    /* タイトル：少し下げてバランス調整 */
     h1 {
         position: absolute;
-        top: 55px; 
+        top: 65px; 
         width: 100%;
         text-align: center;
-        font-size: 2.2rem;
+        font-size: 2.6rem; /* 少し大きくしたよ */
         color: #ffcc00;
         margin: 0;
         font-family: 'Arial Black', sans-serif;
-        -webkit-text-stroke: 1.5px #fff;
+        -webkit-text-stroke: 1.8px #fff;
         z-index: 10;
     }
 
-    /* スタート画面：背景を透明にして下の文字が見えるように！ */
+    /* スタート画面 */
     #start-screen {
         position: absolute;
         top: 0;
@@ -70,16 +71,16 @@
         cursor: pointer;
     }
 
-    /* スタートボタン：黒いリボン風デザイン */
+    /* スタートボタン：ワイドに合わせて少し大きく */
     .start-button {
         background-color: #111;
         color: #ffcc00;
-        padding: 12px 45px;
-        font-size: 1.3rem;
+        padding: 15px 60px;
+        font-size: 1.4rem;
         font-weight: bold;
         border: 2px solid #333;
         clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-        box-shadow: 0 6px 0 #000;
+        box-shadow: 0 8px 0 #000;
         transition: transform 0.1s;
     }
 
@@ -87,61 +88,61 @@
         transform: scale(1.05);
     }
 
-    /* ゲーム中以外は隠す仕組み */
     .hidden {
         display: none !important;
     }
 
-    /* 問題エリア：漢字（大）とローマ字（小） */
+    /* 問題エリア：枠が広がった分、位置を調整 */
     #question-area {
         position: absolute;
-        top: 130px; 
+        top: 160px; 
         width: 100%;
         text-align: center;
     }
 
     #kanji {
-        font-size: 2.4rem;
+        font-size: 2.8rem; /* 漢字をさらにデカく！ */
         font-weight: bold;
         color: #ffffff;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         height: 1.3em;
-        text-shadow: 0 0 10px rgba(255,255,255,0.4);
+        text-shadow: 0 0 15px rgba(255,255,255,0.4);
     }
 
     #word {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: bold;
         color: #00e5ff;
         font-family: 'Courier New', Courier, monospace;
         white-space: nowrap;
+        letter-spacing: 2px;
     }
 
-    /* 下のボタン：リセットと設定 */
+    /* 下のボタン */
     .btn-group {
         position: absolute;
-        bottom: 35px;
+        bottom: 40px;
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 12px;
+        gap: 15px;
     }
 
     .pop-button {
-        padding: 8px 18px;
-        font-size: 0.9rem;
+        padding: 10px 22px;
+        font-size: 1rem;
         font-weight: bold;
         color: white;
         background: linear-gradient(to bottom, #ff9900, #cc7700);
         border: none;
-        border-radius: 20px;
-        box-shadow: 0 4px #995500;
+        border-radius: 25px;
+        box-shadow: 0 5px #995500;
         cursor: pointer;
     }
 
     .pop-button:active {
         box-shadow: none;
-        transform: translateY(4px);
+        transform: translateY(5px);
     }
 </style>
 </head>
