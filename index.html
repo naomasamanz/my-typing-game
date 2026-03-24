@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お米タイピング</title>
+    <title>お米タイピング - KomeTyping</title>
     <style>
-        /* 1. 背景：Pop風の斜めストライプ */
+        /* 1. 背景：画面全体をPop風の斜めストライプに */
         body {
             margin: 0;
             padding: 0;
@@ -15,104 +15,135 @@
             height: 100vh;
             background: repeating-linear-gradient(
                 45deg,
-                #444,
-                #444 20px,
-                #555 20px,
-                #555 40px
+                #666,
+                #666 15px,
+                #777 15px,
+                #777 30px
             );
-            font-family: 'Arial Black', "Hiragino Sans", "Meiryo", sans-serif;
+            font-family: "Hiragino Sans", "Meiryo", sans-serif;
             overflow: hidden;
-            color: white;
         }
 
-        /* 2. ゲーム画面：角丸で透ける黒い箱 */
-        #game-container {
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 6px solid #888;
-            border-radius: 40px;
-            padding: 60px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            width: 80%;
-            max-width: 800px;
+        /* 2. ゲーム画面の「外枠」：Popタイピングのあのサイズ感 */
+        #game-window {
+            width: 800px;  /* 横幅を固定 */
+            height: 600px; /* 縦幅を固定 */
+            background-color: #444; /* 中の背景色 */
+            border: 8px solid #333; /* 濃いめの枠 */
+            border-radius: 15px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            /* 中の縞々 */
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(255,255,255,0.02),
+                rgba(255,255,255,0.02) 2px,
+                transparent 2px,
+                transparent 4px
+            );
         }
 
-        /* 3. タイトル：黄色で白フチ、少し斜め */
+        /* 3. タイトル：浮いている感じを出す */
         h1 {
-            font-size: 4rem;
-            color: #ffcc00;
+            font-size: 4.5rem;
+            color: #ffcc00; /* 黄色 */
+            margin: 0 0 30px 0;
+            /* 白と緑のフチ取りでPop風に */
             text-shadow: 
                 4px 4px 0 #fff, -4px -4px 0 #fff,
-                4px -4px 0 #fff, -4px 4px 0 #fff;
-            transform: rotate(-4deg);
-            margin-bottom: 50px;
-            letter-spacing: 5px;
+                4px -4px 0 #fff, -4px 4px 0 #fff,
+                6px 6px 0 #2e7d32; 
+            transform: rotate(-3deg); /* 少し斜め */
+            font-family: 'Arial Black', sans-serif;
         }
 
-        /* 4. スコア表示（粒数） */
-        #score-display {
-            font-size: 1.5rem;
-            color: #fff;
-            margin-bottom: 20px;
+        /* スコア表示 */
+        #score-board {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
 
+        /* 漢字とローマ字 */
         #kanji {
             font-size: 2.2rem;
-            color: #ccc;
+            color: #ddd;
             margin-bottom: 10px;
             height: 1.2em;
         }
 
         #word {
-            font-size: 5rem;
+            font-size: 4.5rem;
             font-weight: bold;
-            color: #00d4ff; /* 水色っぽくして目立たせる */
-            text-shadow: 2px 2px 10px rgba(0,212,255,0.5);
+            color: #00e5ff; /* 鮮やかな水色 */
+            text-shadow: 0 0 20px rgba(0,229,255,0.4);
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* 5. ぷっくりしたボタン */
+        /* 4. 下のボタン */
+        .btn-group {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+        }
+
         .pop-button {
-            margin-top: 40px;
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            padding: 12px 30px;
+            font-size: 1.2rem;
             font-weight: bold;
             color: white;
             background: linear-gradient(to bottom, #ff9900, #cc7700);
             border: none;
             border-radius: 50px;
-            box-shadow: 0 6px #995500;
+            box-shadow: 0 5px #995500;
             cursor: pointer;
-            transition: 0.1s;
         }
 
         .pop-button:active {
             box-shadow: none;
-            transform: translateY(6px);
+            transform: translateY(5px);
         }
 
-        .typed { color: #555; }
+        /* バージョン表記（左下） */
+        .version {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
-    <div id="game-container">
-        <h1>お米タイピング</h1>
+    <div id="game-window">
+        <div id="score-board">ハイスコア: <span id="rice-count">0</span> 粒</div>
         
-        <div id="score-display"><span id="rice-count">0</span> 粒</div>
+        <h1>お米タイピング</h1>
         
         <div id="kanji">Loading...</div>
         <div id="word"></div>
 
-        <button class="pop-button" onclick="location.reload()">リセット</button>
+        <div class="btn-group">
+            <button class="pop-button" onclick="location.reload()">リセット</button>
+            <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 5px #000;">設定</button>
+        </div>
+
+        <div class="version">Ver.1.0 ©KomeTyping</div>
     </div>
 
     <script type="module">
         let wordList = [];
         let currentRoma = '';
         let charIndex = 0;
-        let riceCount = 0; // スコア用
+        let riceCount = 0;
 
         const kanjiDisplay = document.getElementById('kanji');
         const wordDisplay = document.getElementById('word');
@@ -120,13 +151,12 @@
 
         async function initGame() {
             try {
-                // ここで自分のURLのwords.jsonを読み込む
                 const response = await fetch('words.json');
                 wordList = await response.json();
                 setWord();
             } catch (e) {
                 kanjiDisplay.textContent = "Error!";
-                wordDisplay.textContent = "words.jsonが見つからないよ";
+                wordDisplay.textContent = "words.jsonを確認してね";
             }
         }
 
@@ -147,20 +177,15 @@
 
         window.addEventListener('keydown', (e) => {
             if (e.key.length !== 1) return;
-
             if (e.key === currentRoma[charIndex]) {
                 charIndex++;
-                riceCount++; // 1文字打つたびにお米が増える！
+                riceCount++;
                 riceDisplay.textContent = riceCount.toLocaleString();
-
                 if (charIndex === currentRoma.length) {
                     setWord();
                 } else {
                     updateDisplay();
                 }
-            } else {
-                // ミスした時の軽い演出（コンソール）
-                console.log("Miss!");
             }
         });
 
