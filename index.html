@@ -42,17 +42,31 @@
             background-size: 10px 10px;
         }
 
-        /* タイトル：小さめだけど目立つように */
+        /* タイトル：滑らかで綺麗なフチ取りに修正版 */
         h1 {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
             font-size: 2.2rem;
             color: #ffcc00;
-            margin: 0 0 15px 0;
-            text-shadow: 
-                2px 2px 0 #fff, -2px -2px 0 #fff,
-                2px -2px 0 #fff, -2px 2px 0 #fff,
-                3px 3px 0 #2e7d32; 
-            transform: rotate(-0deg);
+            margin: 0;
             font-family: 'Arial Black', sans-serif;
+            
+            /* 滑らかにするために、上下左右と斜め全方位に影を配置 */
+            text-shadow: 
+                2px 2px 0 #fff,   -2px -2px 0 #fff,
+                2px -2px 0 #fff,  -2px 2px 0 #fff,
+                /* さらに隙間を埋める影を足す */
+                1.5px 0 0 #fff,   -1.5px 0 0 #fff,
+                0 1.5px 0 #fff,   0 -1.5px 0 #fff,
+                1px 2px 0 #fff,   -1px -2px 0 #fff,
+                2px 1px 0 #fff,   -2px -1px 0 #fff,
+                
+                /* 一番下の緑の影も滑らかに */
+                4px 4px 0 #2e7d32,
+                3.5px 4.5px 0 #2e7d32,
+                4.5px 3.5px 0 #2e7d32;
         }
 
         /* スコア表示（左上） */
