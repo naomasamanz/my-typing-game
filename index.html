@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11歳の自作タイピング - 日本語版</title>
+    <style>
+        /* 見た目を整えるCSS */
+        body {
+            text-align: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        #kanji {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            min-height: 1.2em;
+        }
+
+        #word {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #007bff;
+            letter-spacing: 0.05em;
+            font-family: monospace;
+        }
+
+        #info {
+            margin-top: 30px;
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .typed { color: #ccc; } /* 打った文字を薄くする用 */
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>タイピング練習（日本語版）</h1>
+        
+        <div id="kanji">Loading...</div>
+        
+        <div id="word"></div>
+
+        <div id="info">半角英数モードで打ってね！</div>
+    </div>
+
+    <script type="module">
+        // JSONファイルを読み込む部分
+        let wordList = [];
+        let currentRoma = '';
+        let charIndex = 0;
+
+        const kanjiDisplay = document.getElementById('kanji');
+        const wordDisplay = document.getElementById('word');
+
+        // JSON読み込み関数
+        async function initGame() {
+            try {
+                const response = await fetch('words.json');
+                if (!response.ok) throw new Error('JSONが見つからないよ');
+                wordList = await response.json();
+                setWord();
+            } catch (error) {
+                kanjiDisplay.textContent = "エラー！";
+                wordDisplay.textContent = "words.jsonを確認してね";
+                console.error(error);
+            }
+        }
+
+        // 新しい単語をセットする関数
+        function setWord() {
+            if (wordList.length === 0) return;
+            
+            // ランダムに選ぶ
+            const pair = wordList[Math.floor(Math.random() * wordList.length)];
+            
+            kanjiDisplay.textContent = pair.kanji;
+            currentRoma = pair.roma;
+            charIndex = 0;
+            updateDisplay();
+        }
+
+        // 画面のローマ字表示を更新する関数
+        function updateDisplay() {
+            // 打った分を「_」にするか、色を変える演出
+            const typedPart = "_".repeat(charIndex);
+            const untypedPart = currentRoma.substring(charIndex);
+            wordDisplay.textContent = typedPart + untypedPart;
+        }
+
+        // キー入力イベント
+        window.addEventListener('keydown', (e) => {
+            // Shiftなどは無視
+            if (e.key.length !== 1) return;
+
+            // 正解判定
+            if (e.key === currentRoma[charIndex]) {
+                charIndex++;
+                
+                // 全部打ち終わった？
+                if (charIndex === currentRoma.length) {
+                    setWord();
+                } else {
+                    updateDisplay();
+                }
+            } else {
+                // ミスした時の演出（コンソールに出すだけじゃなく、画面を揺らすとかもできるよ！）
+                console.log("Miss: " + e.key);
+            }
+        });
+
+        // スタート！
+        initGame();
+    </script>
+</body>
+</html>
