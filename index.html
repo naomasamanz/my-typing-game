@@ -43,14 +43,14 @@
             z-index: 10;
         }
 
-        /* スタート画面のオーバーレイ */
+       /* スタート画面のオーバーレイ：背景を透明にして明るくしたよ！ */
         #start-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.2);
+            background: none; /* 背景を消して、下のスコアが見えるようにしたよ */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -58,17 +58,22 @@
             cursor: pointer;
         }
 
-        /* Popタイピング風の黒いスタートボタン */
+        /* ポップタイピング風スタートボタン：もっとパキッとさせたよ */
         .start-button {
             background-color: #111;
             color: #ffcc00;
-            padding: 10px 40px;
-            font-size: 1.2rem;
+            padding: 12px 45px; /* 少し大きくしたよ */
+            font-size: 1.3rem;
             font-weight: bold;
-            border: none;
-            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%); /* リボンの形 */
-            box-shadow: 0 4px #000;
+            border: 2px solid #333; /* 少しフチをつけて浮かせてみたよ */
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+            box-shadow: 0 6px 0 #000; /* 影を少し濃くしたよ */
             transition: transform 0.1s;
+        }
+
+        /* スコアなどの z-index 調整（念のため） */
+        #score-board, h1 {
+            z-index: 10;
         }
 
         .start-button:hover {
