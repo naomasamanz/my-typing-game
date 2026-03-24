@@ -177,13 +177,20 @@
         }
 
         // ゲーム開始の関数
-        window.startGame = function() {
-            if (isPlaying) return;
-            isPlaying = true;
-            startScreen.classList.add('hidden'); // スタート画面を隠す
-            questionArea.classList.remove('hidden'); // 問題エリアを出す
-            setWord();
-        };
+window.startGame = function() {
+    if (isPlaying) return;
+    isPlaying = true;
+
+    // スタート画面、タイトル、下のボタンを隠す
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('game-title').classList.add('hidden');
+    document.getElementById('footer-buttons').classList.add('hidden');
+
+    // 問題エリアを表示
+    document.getElementById('question-area').classList.remove('hidden');
+    
+    setWord();
+};
 
         function setWord() {
             if (wordList.length === 0) return;
