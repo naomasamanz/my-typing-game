@@ -29,18 +29,10 @@
             background-size: 10px 10px;
         }
 
-        #score-board {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
+        /* タイトル位置を微調整 */
         h1 {
             position: absolute;
-            top: 60px; 
+            top: 55px; 
             width: 100%;
             text-align: center;
             font-size: 2.2rem;
@@ -48,6 +40,44 @@
             margin: 0;
             font-family: 'Arial Black', sans-serif;
             -webkit-text-stroke: 1.5px #fff;
+            z-index: 10;
+        }
+
+        /* スタート画面のオーバーレイ */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        /* Popタイピング風の黒いスタートボタン */
+        .start-button {
+            background-color: #111;
+            color: #ffcc00;
+            padding: 10px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%); /* リボンの形 */
+            box-shadow: 0 4px #000;
+            transition: transform 0.1s;
+        }
+
+        .start-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ゲーム中以外は隠す仕組み */
+        .hidden {
+            display: none !important;
         }
 
         #question-area {
@@ -57,24 +87,21 @@
             text-align: center;
         }
 
-        /* 漢字：ここを大きく、目立つ白に！ */
         #kanji {
-            font-size: 2.4rem; /* 1.2remから大幅アップ */
+            font-size: 2.4rem;
             font-weight: bold;
             color: #ffffff;
             margin-bottom: 5px;
             height: 1.3em;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            text-shadow: 0 0 10px rgba(255,255,255,0.4);
         }
 
-        /* ローマ字：ここを小さく、スッキリと！ */
         #word {
-            font-size: 1.4rem; /* 2.6remから小さくしたよ */
+            font-size: 1.4rem;
             font-weight: bold;
             color: #00e5ff;
             font-family: 'Courier New', Courier, monospace;
             white-space: nowrap;
-            letter-spacing: 1px;
         }
 
         .btn-group {
@@ -97,29 +124,18 @@
             box-shadow: 0 4px #995500;
             cursor: pointer;
         }
-
-        .pop-button:active {
-            box-shadow: none;
-            transform: translateY(4px);
-        }
-
-        .version {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            color: #666;
-            font-size: 0.7rem;
-        }
     </style>
 </head>
 <body>
-
     <div id="game-window">
+        <div id="start-screen" onclick="startGame()">
+            <button class="start-button">スペースキーでスタート！</button>
+        </div>
+
         <div id="score-board">スコア: <span id="rice-count">0</span> 粒</div>
-        
         <h1>お米タイピング</h1>
         
-        <div id="question-area">
+        <div id="question-area" class="hidden">
             <div id="kanji">Loading...</div>
             <div id="word"></div>
         </div>
@@ -128,8 +144,6 @@
             <button class="pop-button" onclick="location.reload()">リセット</button>
             <button class="pop-button" style="background: linear-gradient(to bottom, #555, #222); box-shadow: 0 4px #000;">設定</button>
         </div>
-
-        <div class="version">Ver.1.0 ©KomeTyping</div>
     </div>
 
     <script type="module">
@@ -137,7 +151,10 @@
         let currentRoma = '';
         let charIndex = 0;
         let riceCount = 0;
+        let isPlaying = false;
 
+        const startScreen = document.getElementById('start-screen');
+        const questionArea = document.getElementById('question-area');
         const kanjiDisplay = document.getElementById('kanji');
         const wordDisplay = document.getElementById('word');
         const riceDisplay = document.getElementById('rice-count');
@@ -146,12 +163,19 @@
             try {
                 const response = await fetch('words.json');
                 wordList = await response.json();
-                setWord();
             } catch (e) {
                 kanjiDisplay.textContent = "Error!";
-                wordDisplay.textContent = "words.jsonを確認してね";
             }
         }
+
+        // ゲーム開始の関数
+        window.startGame = function() {
+            if (isPlaying) return;
+            isPlaying = true;
+            startScreen.classList.add('hidden'); // スタート画面を隠す
+            questionArea.classList.remove('hidden'); // 問題エリアを出す
+            setWord();
+        };
 
         function setWord() {
             if (wordList.length === 0) return;
@@ -169,7 +193,15 @@
         }
 
         window.addEventListener('keydown', (e) => {
-            if (e.key.length !== 1) return;
+            // スペースキーで開始
+            if (e.code === "Space" && !isPlaying) {
+                e.preventDefault();
+                startGame();
+                return;
+            }
+
+            if (!isPlaying || e.key.length !== 1) return;
+
             if (e.key === currentRoma[charIndex]) {
                 charIndex++;
                 riceCount++;
