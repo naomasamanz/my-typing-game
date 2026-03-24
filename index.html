@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お米タイピング</title>
     <style>
+    /* （body と #game-window はそのまま） */
     body {
         margin: 0;
         padding: 0;
@@ -17,12 +18,11 @@
         overflow: hidden;
     }
 
-    /* 【サイズ変更】横を500px、縦を350pxに広げたよ！ */
     #game-window {
         width: 500px;
         height: 350px;
         background-color: #333;
-        border: 6px solid #222; /* 枠も少し太くして重厚感アップ */
+        border: 6px solid #222;
         border-radius: 15px;
         position: relative;
         box-shadow: 0 25px 60px rgba(0,0,0,0.7);
@@ -30,7 +30,6 @@
         background-size: 10px 10px;
     }
 
-    /* スコア */
     #score-board {
         position: absolute;
         top: 20px;
@@ -42,13 +41,13 @@
         text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
     }
 
-    /* タイトル：少し下げてバランス調整 */
+    /* タイトル：少しだけ上に詰めてスペースを作る */
     h1 {
         position: absolute;
-        top: 65px; 
+        top: 55px; /* 65pxから10px上げたよ */
         width: 100%;
         text-align: center;
-        font-size: 2.6rem; /* 少し大きくしたよ */
+        font-size: 2.6rem;
         color: #ffcc00;
         margin: 0;
         font-family: 'Arial Black', sans-serif;
@@ -56,7 +55,6 @@
         z-index: 10;
     }
 
-    /* スタート画面 */
     #start-screen {
         position: absolute;
         top: 0;
@@ -71,7 +69,6 @@
         cursor: pointer;
     }
 
-    /* スタートボタン：ワイドに合わせて少し大きく */
     .start-button {
         background-color: #111;
         color: #ffcc00;
@@ -84,28 +81,24 @@
         transition: transform 0.1s;
     }
 
-    .start-button:hover {
-        transform: scale(1.05);
-    }
-
     .hidden {
         display: none !important;
     }
 
-    /* 問題エリア：枠が広がった分、位置を調整 */
+    /* 【ここが重要！】問題エリアを上に持ち上げて「真ん中」に配置 */
     #question-area {
         position: absolute;
-        top: 160px; 
+        top: 145px; /* 160pxから15px上げたよ。これでボタンとの間隔が空く！ */
         width: 100%;
         text-align: center;
     }
 
     #kanji {
-        font-size: 2.8rem; /* 漢字をさらにデカく！ */
+        font-size: 2.8rem;
         font-weight: bold;
         color: #ffffff;
-        margin-bottom: 8px;
-        height: 1.3em;
+        margin-bottom: 5px; /* 8pxから少し詰めてコンパクトに */
+        height: 1.2em;
         text-shadow: 0 0 15px rgba(255,255,255,0.4);
     }
 
@@ -118,7 +111,7 @@
         letter-spacing: 2px;
     }
 
-    /* 下のボタン */
+    /* 下のボタン：位置はそのまま */
     .btn-group {
         position: absolute;
         bottom: 40px;
@@ -138,11 +131,6 @@
         border-radius: 25px;
         box-shadow: 0 5px #995500;
         cursor: pointer;
-    }
-
-    .pop-button:active {
-        box-shadow: none;
-        transform: translateY(5px);
     }
 </style>
 </head>
