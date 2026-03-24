@@ -17,7 +17,6 @@
             overflow: hidden;
         }
 
-        /* 枠：サイズ固定 */
         #game-window {
             width: 400px;
             height: 300px;
@@ -30,7 +29,6 @@
             background-size: 10px 10px;
         }
 
-        /* スコア：左上に固定 */
         #score-board {
             position: absolute;
             top: 15px;
@@ -40,45 +38,45 @@
             font-weight: bold;
         }
 
-        /* タイトル：白フチ・影なし・位置固定 */
         h1 {
             position: absolute;
-            top: 65px; 
+            top: 60px; 
             width: 100%;
             text-align: center;
             font-size: 2.2rem;
             color: #ffcc00;
             margin: 0;
             font-family: 'Arial Black', sans-serif;
-            text-shadow: none;
             -webkit-text-stroke: 1.5px #fff;
         }
 
-        /* 問題エリア：ここを上に詰めてバランスをとったよ */
         #question-area {
             position: absolute;
-            top: 135px; /* 前より20px上げたよ！ */
+            top: 130px; 
             width: 100%;
             text-align: center;
         }
 
-        #kanzi {
-            font-size: 2.6rem;
-            color: #bbb;
-            margin-bottom: 2px;
-            height: 1.5em;
+        /* 漢字：ここを大きく、目立つ白に！ */
+        #kanji {
+            font-size: 2.4rem; /* 1.2remから大幅アップ */
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+            height: 1.3em;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
+        /* ローマ字：ここを小さく、スッキリと！ */
         #word {
-            font-size: 1.2rem;
+            font-size: 1.4rem; /* 2.6remから小さくしたよ */
             font-weight: bold;
             color: #00e5ff;
-            text-shadow: 0 0 10px rgba(0,229,255,0.4);
             font-family: 'Courier New', Courier, monospace;
             white-space: nowrap;
+            letter-spacing: 1px;
         }
 
-        /* ボタンエリア：下部に固定 */
         .btn-group {
             position: absolute;
             bottom: 35px;
